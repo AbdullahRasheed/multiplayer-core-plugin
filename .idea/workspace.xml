@@ -9,7 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f22165e4-1453-475a-85a8-3b9e513c30a9" name="Changes" comment="">
+    <list default="true" id="f22165e4-1453-475a-85a8-3b9e513c30a9" name="Changes" comment="Server restarter">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/version.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/version.txt" afterDir="false" />
     </list>
@@ -164,7 +165,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657801447122</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Server restarter">
+      <created>1657801593271</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1657801593271</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Server restarter">
+      <created>1657801746856</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1657801746856</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

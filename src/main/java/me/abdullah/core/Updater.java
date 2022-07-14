@@ -44,7 +44,7 @@ public class Updater {
                     in.close();
                     out.close();
 
-                    // TODO restart game
+                    // TODO restart server
                 }
             }catch (Exception e){
                 Bukkit.getLogger().severe("ERROR WHILE CHECKING FOR UPDATE");

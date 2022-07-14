@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f22165e4-1453-475a-85a8-3b9e513c30a9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/abdullah/core/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/abdullah/core/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/abdullah/core/PluginLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/abdullah/core/PluginLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/abdullah/core/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/abdullah/core/Updater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_19_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_19_R0_1_SNAPSHOT.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +79,33 @@
       <option name="project" value="LOCAL" />
       <updated>1657766291512</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="First commit">
+      <created>1657766549576</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1657766549576</updated>
+    </task>
+    <task id="LOCAL-00005" summary="First commit">
+      <created>1657766645093</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1657766645093</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Jar">
+      <created>1657766829665</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1657766829665</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jar" />
   </component>
 </project>

@@ -9,12 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f22165e4-1453-475a-85a8-3b9e513c30a9" name="Changes" comment="Version code">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/multiplayer_core_plugin_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/MultiplayerCore_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f22165e4-1453-475a-85a8-3b9e513c30a9" name="Changes" comment="Server restarter">
       <change beforePath="$PROJECT_DIR$/src/main/java/me/abdullah/core/Updater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/abdullah/core/Updater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/version.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/version.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,13 +121,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657798101456</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Server restarter">
+      <created>1657800214191</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1657800214191</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
     <MESSAGE value="Jar" />
     <MESSAGE value="Version code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version code" />
+    <MESSAGE value="Server restarter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Server restarter" />
   </component>
 </project>

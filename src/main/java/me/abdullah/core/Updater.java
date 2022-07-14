@@ -50,15 +50,21 @@ public class Updater {
                     out.close();
 
                     // TODO restart server
-                    int counter = 0;
-                    this.broadcastScheduleId = Bukkit.getScheduler().runTaskTimer(core, () -> {
-                        int seconds = 120 - (15*counter);
-                        Bukkit.broadcastMessage("UPDATE FOUND! Server restarting in " + counter + " seconds");
+                    this.broadcastScheduleId = Bukkit.getScheduler().runTaskTimer(core, new Runnable() {
+                        int counter = 0;
 
-                        if(seconds == 0){
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
-                            Bukkit.getScheduler().cancelTask(broadcastScheduleId);
-                            return;
+                        @Override
+                        public void run() {
+                            int seconds = 120 - (15*counter);
+                            Bukkit.broadcastMessage("UPDATE FOUND! Server restarting in " + seconds + " seconds");
+
+                            if(seconds <= 0){
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                                Bukkit.getScheduler().cancelTask(broadcastScheduleId);
+                                return;
+                            }
+
+                            counter++;
                         }
                     }, 0, 20 * 15).getTaskId();
 

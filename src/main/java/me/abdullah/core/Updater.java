@@ -49,7 +49,7 @@ public class Updater {
                     in.close();
                     out.close();
 
-                    // TODO restart server
+                    // TODO noclassdeffound issue
                     this.broadcastScheduleId = Bukkit.getScheduler().runTaskTimer(core, new Runnable() {
                         int counter = 0;
 
@@ -59,6 +59,7 @@ public class Updater {
                             Bukkit.broadcastMessage("UPDATE FOUND! Server restarting in " + seconds + " seconds");
 
                             if(seconds <= 0){
+                                Bukkit.broadcastMessage("RESTARTING!!!");
                                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
                                 Bukkit.getScheduler().cancelTask(broadcastScheduleId);
                                 return;

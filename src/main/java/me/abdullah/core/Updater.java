@@ -47,7 +47,7 @@ public class Updater {
                     // TODO restart server
                 }
             }catch (Exception e){
-                Bukkit.getLogger().severe("ERROR WHILE CHECKING FOR UPDATE");
+                Bukkit.getLogger().severe("ERROR WHILE CHECKING FOR UPDATE: " + e.getMessage());
             }
         }, 0, 20 * 60);
     }

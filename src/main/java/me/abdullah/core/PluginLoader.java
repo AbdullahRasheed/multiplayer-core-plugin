@@ -2,12 +2,14 @@ package me.abdullah.core;
 
 import me.abdullah.core.commands.Command;
 import me.abdullah.core.commands.CommandHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.IOException;
 
 public class PluginLoader {
 
@@ -48,5 +50,15 @@ public class PluginLoader {
 
     public void registerCommandHandler(CommandHandler handler){
         this.handler = handler;
+    }
+
+    public void beginUpdateChecker(){
+        try {
+            String versionUrl = "https://raw.githubusercontent.com/AbdullahRasheed/multiplayer-core-plugin/master/src/main/resources/version.txt";
+            String downloadUrl = "https://github.com/AbdullahRasheed/multiplayer-core-plugin/raw/master/target/multiplayer-core-plugin-1.0-SNAPSHOT.jar";
+            new Updater(plugin, versionUrl, downloadUrl).start();
+        }catch (IOException e){
+            Bukkit.getLogger().severe("Could not start the update checker! " + e.getMessage());
+        }
     }
 }

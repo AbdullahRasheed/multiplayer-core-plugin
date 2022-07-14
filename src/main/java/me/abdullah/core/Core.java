@@ -41,6 +41,9 @@ public class Core extends JavaPlugin {
 
         loader.registerCommandHandler(new CommandHandler());
         loader.registerCommand(new BankCommand());
+
+        String versionUrl = "";
+        String downloadUrl = "https://github.com/AbdullahRasheed/multiplayer-core-plugin/raw/master/target/multiplayer-core-plugin-1.0-SNAPSHOT.jar";
     }
 
     public PlayerCache getMainPlayerCache(){

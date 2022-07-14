@@ -1,0 +1,8 @@
+name: MultiplayerCore
+version: 0.0.1
+author: dedose
+main: me.abdullah.core.Core
+
+commands:
+  bank:
+    description: A parent command to manage the user's bank

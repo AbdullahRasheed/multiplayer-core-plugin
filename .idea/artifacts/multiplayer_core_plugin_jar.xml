@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="multiplayer-core-plugin:jar">
+    <output-path>$PROJECT_DIR$/../../spigot-server/plugins</output-path>
+    <root id="archive" name="multiplayer-core-plugin.jar">
+      <element id="module-output" name="multiplayer-core-plugin" />
+    </root>
+  </artifact>
+</component>

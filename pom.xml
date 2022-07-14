@@ -14,7 +14,7 @@
     </properties>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>MultiplayerCore</finalName>
     </build>
 
     <repositories>

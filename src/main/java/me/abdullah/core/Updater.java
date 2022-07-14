@@ -60,7 +60,7 @@ public class Updater {
 
                             if(seconds <= 0){
                                 Bukkit.broadcastMessage("RESTARTING!!!");
-                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                                Bukkit.getServer().spigot().restart();
                                 Bukkit.getScheduler().cancelTask(broadcastScheduleId);
                                 return;
                             }

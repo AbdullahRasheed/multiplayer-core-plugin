@@ -20,6 +20,18 @@ public class PluginLoader {
         this.plugin = plugin;
     }
 
+    public int getVersionCode(){
+        String version = plugin.getDescription().getVersion();
+        int v = 0;
+
+        String[] split = version.split("\\.");
+        for (int i = 0; i < split.length; i++) {
+            v += Integer.parseInt(split[i]) * Math.pow(10, split.length - i - 1);
+        }
+
+        return v;
+    }
+
     public File mkdirs(File folder){
         if(!folder.exists()){
             folder.mkdirs();
@@ -52,11 +64,11 @@ public class PluginLoader {
         this.handler = handler;
     }
 
-    public void beginUpdateChecker(){
+    public void beginUpdateChecker(Core core){
         try {
             String versionUrl = "https://raw.githubusercontent.com/AbdullahRasheed/multiplayer-core-plugin/master/src/main/resources/version.txt";
             String downloadUrl = "https://github.com/AbdullahRasheed/multiplayer-core-plugin/raw/master/target/multiplayer-core-plugin.jar";
-            new Updater(plugin, versionUrl, downloadUrl).start();
+            new Updater(core, versionUrl, downloadUrl).start();
         }catch (IOException e){
             Bukkit.getLogger().severe("Could not start the update checker! " + e.getMessage());
         }

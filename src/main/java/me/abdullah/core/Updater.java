@@ -11,26 +11,27 @@ import java.util.concurrent.Executors;
 
 public class Updater {
 
-    private Plugin plugin;
+    private Core core;
     private URL versionChecker;
     private URL downloadUrl;
 
-    public Updater(Plugin plugin, String versionChecker, String downloadUrl) throws MalformedURLException {
-        this.plugin = plugin;
+    public Updater(Core core, String versionChecker, String downloadUrl) throws MalformedURLException {
+        this.core = core;
         this.versionChecker = new URL(versionChecker);
         this.downloadUrl = new URL(downloadUrl);
     }
 
     public void start(){
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(core, () -> {
             try {
-                String currentVersion = plugin.getDescription().getVersion();
+                String currentVersion = core.getDescription().getVersion();
                 String releaseVersion = readText(versionChecker);
 
                 if(!currentVersion.equals(releaseVersion)){
                     BufferedInputStream in = new BufferedInputStream(downloadUrl.openStream());
                     FileOutputStream out = new FileOutputStream(
-                            "plugins" + System.getProperty("file.separator") + plugin.getName() + ".jar"
+                            "plugins" + System.getProperty("file.separator") + core.getName() + ".jar",
+                            false
                     );
 
                     if(in == null || out == null) throw new IOException();

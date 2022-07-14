@@ -14,6 +14,8 @@ public class Core extends JavaPlugin {
 
     private static Core INSTANCE;
 
+    private int version;
+
     private File playerFolder;
     private File bankFolder;
 
@@ -27,6 +29,8 @@ public class Core extends JavaPlugin {
         INSTANCE = this;
 
         PluginLoader loader = new PluginLoader(this);
+
+        this.version = loader.getVersionCode();
 
         this.lang = new Lang(loader.loadConfig("lang.yml"));
         this.cityConfig = new CityConfig(loader.loadConfig("city.yml"));
@@ -44,7 +48,11 @@ public class Core extends JavaPlugin {
 
         System.out.println(getDescription().getVersion());
 
-        loader.beginUpdateChecker();
+        loader.beginUpdateChecker(this);
+    }
+
+    public int getVersionCode(){
+        return version;
     }
 
     public PlayerCache getMainPlayerCache(){

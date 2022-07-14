@@ -2,6 +2,7 @@ package me.abdullah.core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -15,6 +16,9 @@ public class Updater {
     private URL versionChecker;
     private URL downloadUrl;
 
+    private int scheduleId;
+    private int broadcastScheduleId;
+
     public Updater(Core core, String versionChecker, String downloadUrl) throws MalformedURLException {
         this.core = core;
         this.versionChecker = new URL(versionChecker);
@@ -22,7 +26,7 @@ public class Updater {
     }
 
     public void start(){
-        Bukkit.getScheduler().runTaskTimerAsynchronously(core, () -> {
+        this.scheduleId = Bukkit.getScheduler().runTaskTimerAsynchronously(core, () -> {
             try {
                 String currentVersion = core.getDescription().getVersion();
                 String releaseVersion = readText(versionChecker);
@@ -46,11 +50,24 @@ public class Updater {
                     out.close();
 
                     // TODO restart server
+                    int counter = 0;
+                    this.broadcastScheduleId = Bukkit.getScheduler().runTaskTimer(core, () -> {
+                        int seconds = 120 - (15*counter);
+                        Bukkit.broadcastMessage("UPDATE FOUND! Server restarting in " + counter + " seconds");
+
+                        if(seconds == 0){
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                            Bukkit.getScheduler().cancelTask(broadcastScheduleId);
+                            return;
+                        }
+                    }, 0, 20 * 15).getTaskId();
+
+                    Bukkit.getScheduler().cancelTask(scheduleId);
                 }
             }catch (Exception e){
                 Bukkit.getLogger().severe("ERROR WHILE CHECKING FOR UPDATE: " + e.getMessage());
             }
-        }, 0, 20 * 60);
+        }, 0, 20 * 60 * 5).getTaskId();
     }
 
     private String readText(URL url) throws IOException {

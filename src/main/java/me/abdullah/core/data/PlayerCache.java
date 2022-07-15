@@ -9,8 +9,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerCache implements Listener {
 
@@ -45,9 +49,30 @@ public class PlayerCache implements Listener {
         });
     }
 
-    // TODO routine to clean up cache every ~30-60 mins
+    public void beginScheduledGarbageCollection(ScheduledExecutorService executor, long delay, TimeUnit unit){
+        executor.schedule(() -> {
+            Iterator<Map.Entry<UUID, GamePlayer>> iter = players.entrySet().iterator();
+            while(iter.hasNext()){
+                if(!iter.next().getValue().isOnline()) iter.remove();
+            }
+        }, delay, unit);
+    }
+
+    public void beginScheduledCacheStoringRoutine(ScheduledExecutorService service, long delay, TimeUnit unit){
+        service.schedule(() -> {
+            try {
+                Serializables.storePlayerCache(this);
+            } catch (IOException e) {
+                Bukkit.getLogger().severe("Could not store the player cache! " + e.getMessage());
+            }
+        }, delay, unit);
+    }
 
     public GamePlayer get(UUID uuid){
         return players.getOrDefault(uuid, null);
+    }
+
+    public Map<UUID, GamePlayer> getPlayers(){
+        return players;
     }
 }

@@ -12,4 +12,9 @@ public class BankAccountData implements Serializable {
         this.uuid = uuid;
         this.money = 0;
     }
+
+    public BankAccountData(UUID uuid, int money){
+        this.uuid = uuid;
+        this.money = money;
+    }
 }

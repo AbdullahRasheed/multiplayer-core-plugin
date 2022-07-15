@@ -69,6 +69,10 @@ public class GamePlayer {
         return uuid;
     }
 
+    public GamePlayerInfo getAsSerializable(){
+        return new GamePlayerInfo(uuid);
+    }
+
     public static GamePlayer get(UUID uuid){
         return Core.getInstance().getMainPlayerCache().get(uuid);
     }

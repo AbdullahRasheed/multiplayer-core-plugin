@@ -6,9 +6,14 @@ import me.abdullah.core.config.CityConfig;
 import me.abdullah.core.config.Lang;
 import me.abdullah.core.data.BankCache;
 import me.abdullah.core.data.PlayerCache;
+import me.abdullah.core.economy.item.BankNote;
+import me.abdullah.core.item.ItemHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Core extends JavaPlugin {
 
@@ -41,14 +46,27 @@ public class Core extends JavaPlugin {
         this.playerCache = new PlayerCache();
         this.bankCache = new BankCache();
 
+        playerCache.beginScheduledGarbageCollection(Executors.newSingleThreadScheduledExecutor(), 60, TimeUnit.MINUTES);
+
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+        playerCache.beginScheduledCacheStoringRoutine(executor, 15, TimeUnit.MINUTES);
+        bankCache.beginScheduledCacheStoringRoutine(executor, 15, TimeUnit.MINUTES);
+
         loader.registerListener(getMainPlayerCache());
 
         loader.registerCommandHandler(new CommandHandler());
         loader.registerCommand(new BankCommand());
 
+        loader.registerItemHandler(new ItemHandler());
+        loader.registerClickable(new BankNote());
+
         System.out.println(getDescription().getVersion());
 
         loader.beginUpdateChecker(this);
+    }
+
+    public void onDisable(){
+        // TODO safely store caches while avoiding conflict with the scheduledexecutorservice
     }
 
     public int getVersionCode(){

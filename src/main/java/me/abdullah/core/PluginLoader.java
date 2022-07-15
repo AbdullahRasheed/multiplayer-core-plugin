@@ -2,6 +2,8 @@ package me.abdullah.core;
 
 import me.abdullah.core.commands.Command;
 import me.abdullah.core.commands.CommandHandler;
+import me.abdullah.core.item.ItemHandler;
+import me.abdullah.core.type.Clickable;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,7 +15,8 @@ import java.io.IOException;
 
 public class PluginLoader {
 
-    private CommandHandler handler;
+    private CommandHandler commandHandler;
+    private ItemHandler itemHandler;
 
     private Plugin plugin;
     public PluginLoader(Plugin plugin){
@@ -54,14 +57,23 @@ public class PluginLoader {
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
     }
 
+    public void registerItemHandler(ItemHandler itemHandler){
+        this.itemHandler = itemHandler;
+        registerListener(itemHandler);
+    }
+
     public void registerCommand(Command command){
-        handler.registerCommand(command.getCommandName(), command);
+        commandHandler.registerCommand(command.getCommandName(), command);
         plugin.getServer().getPluginCommand(command.getCommandName())
-                .setExecutor(handler);
+                .setExecutor(commandHandler);
     }
 
     public void registerCommandHandler(CommandHandler handler){
-        this.handler = handler;
+        this.commandHandler = handler;
+    }
+
+    public void registerClickable(Clickable clickable){
+        itemHandler.registerClickable(clickable.getId(), clickable);
     }
 
     public void beginUpdateChecker(Core core){

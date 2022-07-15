@@ -8,15 +8,12 @@ public class BankAccount {
     private int money;
 
     public BankAccount(BankAccountData data){
-        this.uuid = uuid;
+        this.uuid = data.uuid;
         this.money = data.money;
     }
 
-    public BankAccountData getRawData(){
-        BankAccountData data = new BankAccountData(uuid);
-        data.money = this.money;
-
-        return data;
+    public BankAccountData getAsSerializable(){
+        return new BankAccountData(uuid, money);
     }
 
     public int getMoney(){

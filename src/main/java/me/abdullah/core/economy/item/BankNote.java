@@ -5,8 +5,7 @@ import me.abdullah.core.Core;
 import me.abdullah.core.config.Lang;
 import me.abdullah.core.data.GamePlayer;
 import me.abdullah.core.item.ItemNBT;
-import me.abdullah.core.type.GameItem;
-import me.abdullah.core.type.IClickable;
+import me.abdullah.core.type.Clickable;
 import me.abdullah.core.util.ItemStackBuilder;
 import me.abdullah.core.util.StringContext;
 import org.bukkit.Material;
@@ -16,12 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class BankNote extends GameItem implements IClickable {
-
-    // TODO maybe make the itemstack static, initialize it onEnable, and
-    // TODO then just update the "money" tag when getting a new instance
-    // TODO except that would require a clone so nvm but keep thinking on that
-    // TODO OR JUST MAKE A CONSTRUCTOR WITH NO PARAMETERS DUMMY
+public class BankNote extends Clickable {
 
     private ItemStack itemStack;
 
@@ -39,6 +33,10 @@ public class BankNote extends GameItem implements IClickable {
             rTag.set("game_id", id);
             rTag.set(amount, "money");
         });
+    }
+
+    public BankNote(){
+        super("bank_note");
     }
 
     @Override

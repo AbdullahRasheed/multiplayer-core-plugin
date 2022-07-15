@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class BankCache {
 
@@ -36,6 +34,16 @@ public class BankCache {
 
     public void retrieveCache(File folder){
         // TODO allow manual set up with custom folder
+    }
+
+    public void beginScheduledCacheStoringRoutine(ScheduledExecutorService service, long delay, TimeUnit unit){
+        service.schedule(() -> {
+            try {
+                Serializables.storeBank(this);
+            } catch (IOException e) {
+                Bukkit.getLogger().severe("Could not store the player cache! " + e.getMessage());
+            }
+        }, delay, unit);
     }
 
     public boolean createAccount(UUID uuid){
@@ -68,5 +76,9 @@ public class BankCache {
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Map<UUID, BankAccount> getAccounts(){
+        return accounts;
     }
 }

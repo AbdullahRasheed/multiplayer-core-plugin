@@ -1,7 +1,7 @@
 package me.abdullah.core.item;
 
 import com.saicone.rtag.RtagItem;
-import me.abdullah.core.type.IClickable;
+import me.abdullah.core.type.Clickable;
 import me.abdullah.core.type.Craftable;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,10 @@ import java.util.Map;
 
 public class ItemHandler implements Listener {
 
-    private static Map<String, IClickable> gameItems = new HashMap<>();
+    private Map<String, Clickable> gameItems;
+    public ItemHandler(){
+        this.gameItems = new HashMap<>();
+    }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
@@ -27,12 +30,12 @@ public class ItemHandler implements Listener {
         gameItems.get(id).onInteract(event, rTag);
     }
 
-    public static void registerClickable(String id, IClickable item){
+    public void registerClickable(String id, Clickable item){
         gameItems.put(id, item);
         Bukkit.getLogger().info(item.getClass().getName() + " clickable registered");
     }
 
-    public static void registerCraftable(Craftable item){
+    public void registerCraftable(Craftable item){
         Bukkit.addRecipe(item.getRecipe());
         Bukkit.getLogger().info(item.getClass().getName() + " craftable registered");
     }

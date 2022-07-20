@@ -13,9 +13,12 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class GamePlayer {
+
+    private Map<String, Runnable> pendingActions;
 
     private UUID uuid;
     private Player player;
@@ -23,6 +26,8 @@ public class GamePlayer {
     private GamePlayer(GamePlayerInfo info){
         this.uuid = info.uuid;
         this.player = Bukkit.getPlayer(info.uuid);
+
+        this.pendingActions = new HashMap<>();
     }
 
     public void sendMessage(String s){
@@ -49,12 +54,33 @@ public class GamePlayer {
         return getInventory().addItem(item.getItemStack());
     }
 
+    public ItemStack getItemInMainHand(){
+        return player.getInventory().getItemInMainHand();
+    }
+
     public boolean createAccount(){
         return Core.getInstance().getBank().createAccount(uuid);
     }
 
     public void setOnline(){
         this.player = Bukkit.getPlayer(uuid);
+    }
+
+    public void setPendingAction(String key, Runnable runnable){
+        pendingActions.put(key, runnable);
+    }
+
+    public Runnable getPendingAction(String key){
+        return pendingActions.get(key);
+    }
+
+    public void runPendingAction(String key){
+        pendingActions.get(key);
+    }
+
+    public void completePendingAction(String key){
+        runPendingAction(key);
+        pendingActions.remove(key);
     }
 
     public boolean isOnline(){

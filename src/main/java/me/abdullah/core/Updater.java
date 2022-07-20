@@ -26,6 +26,7 @@ public class Updater {
     }
 
     public void start(){
+        // TODO use an executorservice here instead (same for the broadcast task)
         this.scheduleId = Bukkit.getScheduler().runTaskTimerAsynchronously(core, () -> {
             try {
                 String currentVersion = core.getDescription().getVersion();

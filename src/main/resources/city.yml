@@ -1,2 +1,4 @@
 price-per-block: 25
 additional-layer-multiplier: 0.02
+price-map:
+  - DIAMOND:200

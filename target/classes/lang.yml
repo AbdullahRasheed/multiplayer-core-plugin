@@ -1,0 +1,3 @@
+check_deposit: "&a&l$%money% &rcheck deposited"
+check_created: "&a&l$%money% &rcheck written"
+not_enough_money: "You do not have sufficient funds!"

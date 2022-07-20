@@ -79,7 +79,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.httpcomponents:httpcore:4.4.14" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.slf4j:jcl-over-slf4j:1.7.32" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.saicone.rtag:rtag-item:1.2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.saicone.rtag:rtag:1.2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.saicone.rtag:rtag-item:1.2.0" level="project" />
   </component>
 </module>

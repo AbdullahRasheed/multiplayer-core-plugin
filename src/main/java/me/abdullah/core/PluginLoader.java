@@ -78,6 +78,7 @@ public class PluginLoader {
 
     public void beginUpdateChecker(Core core){
         try {
+            // TODO read version directly from plugin.yml instead
             String versionUrl = "https://raw.githubusercontent.com/AbdullahRasheed/multiplayer-core-plugin/master/src/main/resources/version.txt";
             String downloadUrl = "https://github.com/AbdullahRasheed/multiplayer-core-plugin/raw/master/target/MultiplayerCore.jar";
             new Updater(core, versionUrl, downloadUrl).start();

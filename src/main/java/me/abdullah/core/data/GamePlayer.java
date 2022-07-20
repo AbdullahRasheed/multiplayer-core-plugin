@@ -74,8 +74,12 @@ public class GamePlayer {
         return pendingActions.get(key);
     }
 
+    public boolean hasPendingAction(String key){
+        return pendingActions.containsKey(key);
+    }
+
     public void runPendingAction(String key){
-        pendingActions.get(key);
+        pendingActions.get(key).run();
     }
 
     public void completePendingAction(String key){

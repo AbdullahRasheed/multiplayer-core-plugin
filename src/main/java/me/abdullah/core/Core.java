@@ -1,7 +1,9 @@
 package me.abdullah.core;
 
 import me.abdullah.core.commands.CommandHandler;
+import me.abdullah.core.commands.accept.AcceptCommand;
 import me.abdullah.core.commands.bank.BankCommand;
+import me.abdullah.core.commands.sell.SellCommand;
 import me.abdullah.core.config.CityConfig;
 import me.abdullah.core.config.Lang;
 import me.abdullah.core.data.BankCache;
@@ -45,6 +47,7 @@ public class Core extends JavaPlugin {
 
         this.playerCache = new PlayerCache();
         this.bankCache = new BankCache();
+        this.bankCache.retrieveCache();
 
         playerCache.beginScheduledGarbageCollection(Executors.newSingleThreadScheduledExecutor(), 60, TimeUnit.MINUTES);
 
@@ -56,6 +59,8 @@ public class Core extends JavaPlugin {
 
         loader.registerCommandHandler(new CommandHandler());
         loader.registerCommand(new BankCommand());
+        loader.registerCommand(new SellCommand());
+        loader.registerCommand(new AcceptCommand());
 
         loader.registerItemHandler(new ItemHandler());
         loader.registerClickable(new BankNote());

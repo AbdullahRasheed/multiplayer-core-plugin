@@ -1,6 +1,7 @@
 package me.abdullah.core.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,14 @@ public class StringContext {
 
     public StringContext(int money){
         placeholders.put("%money%", Integer.toString(money));
+    }
+
+    public StringContext(UUID uuid){
+        placeholders.put("%uuid%", uuid.toString());
+    }
+
+    public StringContext(String s){
+        placeholders.put("%player%", s);
     }
 
     public StringContext(UUID uuid, int money, Date date){

@@ -3,6 +3,7 @@ package me.abdullah.core.commands.bank;
 import me.abdullah.core.commands.Command;
 import me.abdullah.core.data.GamePlayer;
 import me.abdullah.core.economy.BankAccount;
+import me.abdullah.core.util.StringContext;
 
 public class BankBalanceCommand extends Command {
 
@@ -18,6 +19,6 @@ public class BankBalanceCommand extends Command {
             return;
         }
 
-        player.sendMessage(Integer.toString(account.getMoney()));
+        player.sendFormattedMessage("bank_balance", new StringContext(account.getMoney()));
     }
 }

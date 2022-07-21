@@ -21,14 +21,14 @@ public class BankPayCommand extends Command {
             return;
         }
 
-        player.sendMessage("Looking up " + args[0] + "...");
+        player.sendFormattedMessage("player_lookup", new StringContext(args[0]));
         BankAccount recipient = getAccount(args);
         if(recipient == null){
-            player.sendMessage("That player does not have a bank account");
+            player.sendFormattedMessage("no_player_bank");
             return;
         }
 
-        player.sendMessage("Found!");
+        player.sendFormattedMessage("Found!", new StringContext(args[0]));
 
         int money;
         try {

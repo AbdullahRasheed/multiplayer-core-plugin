@@ -34,4 +34,8 @@ public class BankAccount {
         this.money += money;
         return true;
     }
+
+    public UUID getUUID(){
+        return uuid;
+    }
 }

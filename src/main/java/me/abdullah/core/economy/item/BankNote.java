@@ -52,7 +52,7 @@ public class BankNote extends Clickable {
             int money = (int) ItemNBT.getSafeValue(rTag, "money");
 
             player.getAccount().unsafeAddMoney(money);
-            player.sendMessage(Core.getInstance().getLang().getPossibleString("check_deposit", new StringContext(money)));
+            player.sendFormattedMessage("check_deposit", new StringContext(money));
 
         }
     }

@@ -12,7 +12,7 @@ public class BankCreateCommand extends Command {
     @Override
     public void onCommand(GamePlayer player, String[] args) {
         if(player.createAccount()){
-            // TODO send success message (they created an account)
+            player.sendFormattedMessage("bank_created");
         }else{
             // TODO send an error message (they already have an account)
         }

@@ -1,6 +1,5 @@
 package me.abdullah.core.data;
 
-import me.abdullah.core.Core;
 import me.abdullah.core.economy.BankAccount;
 import me.abdullah.core.economy.BankAccountData;
 import me.abdullah.core.io.Serializables;

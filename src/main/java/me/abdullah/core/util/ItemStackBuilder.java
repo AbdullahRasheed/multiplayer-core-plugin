@@ -1,8 +1,11 @@
 package me.abdullah.core.util;
 
+import me.abdullah.core.Core;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +31,11 @@ public class ItemStackBuilder {
 
     public ItemStackBuilder setLore(List<String> lore){
         meta.setLore(lore);
+        return this;
+    }
+
+    public <Z, T> ItemStackBuilder setPersistentData(String key, PersistentDataType<Z, T> type, T value){
+        meta.getPersistentDataContainer().set(new NamespacedKey(Core.getInstance(), key), type, value);
         return this;
     }
 

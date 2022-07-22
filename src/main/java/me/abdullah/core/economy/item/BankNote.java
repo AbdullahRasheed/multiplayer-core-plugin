@@ -1,6 +1,5 @@
 package me.abdullah.core.economy.item;
 
-import com.saicone.rtag.RtagItem;
 import me.abdullah.core.Core;
 import me.abdullah.core.config.Lang;
 import me.abdullah.core.data.GamePlayer;
@@ -12,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
@@ -27,12 +27,9 @@ public class BankNote extends Clickable {
         this.itemStack = new ItemStackBuilder(Material.PAPER)
                 .setDisplayName(lang.getString("bank_note_displayname", context))
                 .setLore(lang.getStringList("bank_note_lore", context))
+                .setPersistentData("game_id", PersistentDataType.STRING, id)
+                .setPersistentData("money", PersistentDataType.INTEGER, amount)
                 .build();
-
-        ItemNBT.loadNBT(this.itemStack, rTag -> {
-            rTag.set("game_id", id);
-            rTag.set(amount, "money");
-        });
     }
 
     public BankNote(){
@@ -45,15 +42,16 @@ public class BankNote extends Clickable {
     }
 
     @Override
-    public void onInteract(PlayerInteractEvent event, RtagItem rTag) {
+    public void onInteract(PlayerInteractEvent event) {
         if(event.getAction() == Action.RIGHT_CLICK_AIR
                 || event.getAction() == Action.RIGHT_CLICK_BLOCK){
             GamePlayer player = GamePlayer.get(event.getPlayer());
-            int money = (int) ItemNBT.getSafeValue(rTag, "money");
+            int money = ItemNBT.getValue(event.getItem(), "money", PersistentDataType.INTEGER);
 
-            player.getAccount().unsafeAddMoney(money);
+            player.getAccount().unsafeAddMoney(money*event.getItem().getAmount());
             player.sendFormattedMessage("check_deposit", new StringContext(money));
 
+            player.getInventory().remove(event.getItem());
         }
     }
 }

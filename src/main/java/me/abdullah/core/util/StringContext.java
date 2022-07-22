@@ -12,10 +12,6 @@ import java.util.UUID;
 
 public class StringContext {
 
-    private UUID uuid;
-    private int money;
-    private Date date;
-
     private Map<String, String> placeholders = new HashMap<>();
 
     public StringContext(UUID uuid, int money){
@@ -31,8 +27,13 @@ public class StringContext {
         placeholders.put("%uuid%", uuid.toString());
     }
 
-    public StringContext(String s){
-        placeholders.put("%player%", s);
+    public StringContext(String player){
+        placeholders.put("%player%", player);
+    }
+
+    public StringContext(String player, int money){
+        placeholders.put("%player%", player);
+        placeholders.put("%money%", Integer.toString(money));
     }
 
     public StringContext(UUID uuid, int money, Date date){
@@ -44,7 +45,10 @@ public class StringContext {
     }
 
     public String complete(String s){
-        placeholders.forEach((key, value) -> s.replaceAll(key, value));
+        for (String key : placeholders.keySet()) {
+            s = s.replaceAll(key, placeholders.get(key));
+        }
+
         return s;
     }
 }

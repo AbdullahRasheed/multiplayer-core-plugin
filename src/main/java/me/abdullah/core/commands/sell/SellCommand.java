@@ -4,6 +4,9 @@ import me.abdullah.core.Core;
 import me.abdullah.core.commands.Command;
 import me.abdullah.core.config.CityConfig;
 import me.abdullah.core.data.GamePlayer;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.ItemStack;
 
 public class SellCommand extends Command {
@@ -29,7 +32,6 @@ public class SellCommand extends Command {
             }
 
             int price = config.getPrice(itemStack.getType());
-            // TODO confirmation clickable message
 
             player.setPendingAction(getCommandName(), () -> {
                 if(!player.getInventory().contains(itemStack)){
@@ -40,6 +42,13 @@ public class SellCommand extends Command {
                 player.getInventory().remove(itemStack);
                 player.getAccount().unsafeAddMoney(price*itemStack.getAmount());
             });
+
+            TextComponent component = new net.md_5.bungee.api.chat.TextComponent("YES");
+            component.setColor(ChatColor.GREEN);
+            component.setBold(true);
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept sell"));
+
+            player.sendMessage(component);
         }
     }
 }

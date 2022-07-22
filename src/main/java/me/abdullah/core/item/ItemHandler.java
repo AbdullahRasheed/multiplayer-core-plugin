@@ -1,12 +1,12 @@
 package me.abdullah.core.item;
 
-import com.saicone.rtag.RtagItem;
 import me.abdullah.core.type.Clickable;
 import me.abdullah.core.type.Craftable;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,12 +22,10 @@ public class ItemHandler implements Listener {
     public void onInteract(PlayerInteractEvent event){
         if(!event.hasItem()) return;
 
-        RtagItem rTag = ItemNBT.getRTag(event.getItem());
-        Object value = ItemNBT.getSafeValue(rTag, "game_id");
-        if(value == null) return;
+        String id = ItemNBT.getSafeValue(event.getItem(), "game_id", PersistentDataType.STRING);
+        if(id == null) return;
 
-        String id = (String) value;
-        gameItems.get(id).onInteract(event, rTag);
+        gameItems.get(id).onInteract(event);
     }
 
     public void registerClickable(String id, Clickable item){

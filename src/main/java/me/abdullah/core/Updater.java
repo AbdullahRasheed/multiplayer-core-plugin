@@ -1,6 +1,8 @@
 package me.abdullah.core;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -30,7 +32,7 @@ public class Updater {
         this.scheduleId = Bukkit.getScheduler().runTaskTimerAsynchronously(core, () -> {
             try {
                 String currentVersion = core.getDescription().getVersion();
-                String releaseVersion = readText(versionChecker);
+                String releaseVersion = readVersion(versionChecker);
 
                 if(!currentVersion.equals(releaseVersion)){
                     BufferedInputStream in = new BufferedInputStream(downloadUrl.openStream());
@@ -78,18 +80,13 @@ public class Updater {
         }, 0, 20 * 60 * 5).getTaskId();
     }
 
-    private String readText(URL url) throws IOException {
+    private String readVersion(URL url) throws IOException {
         URLConnection connection = url.openConnection();
         connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        Reader reader = new InputStreamReader(connection.getInputStream());
 
-        StringBuilder sb = new StringBuilder();
-        String s;
-        while((s = reader.readLine()) != null){
-            sb.append(s);
-        }
+        FileConfiguration config = YamlConfiguration.loadConfiguration(reader);
 
-        reader.close();
-        return sb.toString();
+        return config.getString("version");
     }
 }

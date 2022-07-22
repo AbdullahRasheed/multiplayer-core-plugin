@@ -1,6 +1,7 @@
 package me.abdullah.core.config;
 
 import me.abdullah.core.util.StringContext;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
@@ -8,15 +9,17 @@ import java.util.List;
 
 public class Lang {
 
+    // TODO cache color coded strings/string lists
+
     private FileConfiguration config;
     public Lang(FileConfiguration config){
-        config.options().copyDefaults(true);
-
         this.config = config;
+
+        config.options().copyDefaults(true);
     }
 
     public String getString(String key){
-        return config.getString(key);
+        return color(config.getString(key));
     }
 
     public String getString(String key, StringContext context){
@@ -46,9 +49,13 @@ public class Lang {
     public List<String> getStringList(String key, StringContext context){
         List<String> list = new ArrayList<>();
         for (String s : getStringList(key)) {
-            list.add(context.complete(s));
+            list.add(color(context.complete(s)));
         }
 
         return list;
+    }
+
+    private String color(String s){
+        return ChatColor.translateAlternateColorCodes('&', s);
     }
 }

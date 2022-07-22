@@ -1,5 +1,5 @@
 name: MultiplayerCore
-version: 0.0.4
+version: ${project.version}
 author: dedose
 main: me.abdullah.core.Core
 

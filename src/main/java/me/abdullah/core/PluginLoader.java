@@ -12,6 +12,8 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class PluginLoader {
 
@@ -50,7 +52,14 @@ public class PluginLoader {
             plugin.saveResource(name, false);
         }
 
-        return YamlConfiguration.loadConfiguration(file);
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        Reader reader = new InputStreamReader(plugin.getResource(name));
+        FileConfiguration def = YamlConfiguration.loadConfiguration(reader);
+
+        config.setDefaults(def);
+
+        return config;
     }
 
     public void registerListener(Listener listener){
@@ -79,7 +88,7 @@ public class PluginLoader {
     public void beginUpdateChecker(Core core){
         try {
             // TODO read version directly from plugin.yml instead
-            String versionUrl = "https://raw.githubusercontent.com/AbdullahRasheed/multiplayer-core-plugin/master/src/main/resources/version.txt";
+            String versionUrl = "https://raw.githubusercontent.com/AbdullahRasheed/multiplayer-core-plugin/master/src/main/resources/plugin.yml";
             String downloadUrl = "https://github.com/AbdullahRasheed/multiplayer-core-plugin/raw/master/target/MultiplayerCore.jar";
             new Updater(core, versionUrl, downloadUrl).start();
         }catch (IOException e){

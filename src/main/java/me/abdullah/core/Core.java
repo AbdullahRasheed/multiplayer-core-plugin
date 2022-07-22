@@ -10,6 +10,7 @@ import me.abdullah.core.data.BankCache;
 import me.abdullah.core.data.PlayerCache;
 import me.abdullah.core.economy.item.BankNote;
 import me.abdullah.core.item.ItemHandler;
+import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -64,8 +65,6 @@ public class Core extends JavaPlugin {
 
         loader.registerItemHandler(new ItemHandler());
         loader.registerClickable(new BankNote());
-
-        System.out.println(getDescription().getVersion());
 
         loader.beginUpdateChecker(this);
     }

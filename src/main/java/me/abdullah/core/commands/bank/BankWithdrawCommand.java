@@ -13,7 +13,7 @@ public class BankWithdrawCommand extends Command {
 
     @Override
     public void onCommand(GamePlayer player, String[] args) {
-        if(args.length < 2){
+        if(args.length == 0){
             // TODO error message
             return;
         }

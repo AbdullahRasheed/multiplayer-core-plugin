@@ -1,6 +1,5 @@
 package me.abdullah.core.type;
 
-import com.saicone.rtag.RtagItem;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public abstract class Clickable extends GameItem {
@@ -9,6 +8,6 @@ public abstract class Clickable extends GameItem {
         super(id);
     }
 
-    public abstract void onInteract(PlayerInteractEvent event, RtagItem rTag);
+    public abstract void onInteract(PlayerInteractEvent event);
 
 }

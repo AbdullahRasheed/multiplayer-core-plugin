@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>multiplayer-core-plugin</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -15,6 +15,12 @@
 
     <build>
         <finalName>MultiplayerCore</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <repositories>
@@ -39,18 +45,6 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.19-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.saicone.rtag</groupId>
-            <artifactId>rtag</artifactId>
-            <version>1.2.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.saicone.rtag</groupId>
-            <artifactId>rtag-item</artifactId>
-            <version>1.2.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

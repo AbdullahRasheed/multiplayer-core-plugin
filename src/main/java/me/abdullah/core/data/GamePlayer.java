@@ -87,6 +87,13 @@ public class GamePlayer {
         pendingActions.remove(key);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof GamePlayer)) return false;
+        
+        return this.uuid.equals(((GamePlayer) obj).uuid);
+    }
+
     public boolean isOnline(){
         return player.isOnline();
     }

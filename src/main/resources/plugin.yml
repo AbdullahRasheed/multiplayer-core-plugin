@@ -1,5 +1,6 @@
 name: MultiplayerCore
 version: ${project.version}
+api-version: 1.19
 author: dedose
 main: me.abdullah.core.Core
 
@@ -10,3 +11,5 @@ commands:
     description: Sells items from the player's inventory
   accept:
     description: Executes the given pending action
+  worldvalue:
+    description: Changes the given world value

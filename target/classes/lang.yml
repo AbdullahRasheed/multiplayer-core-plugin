@@ -11,3 +11,5 @@ bank_note_displayname: "&a&l$%money% &rBank Note"
 bank_note_lore:
   - "&fValue: &a&l$%money%"
   - "&fSigned: &7%uuid%"
+plot-area-added: "&aPlot area added!"
+plot-point-selected: "&aPlot point selected!"

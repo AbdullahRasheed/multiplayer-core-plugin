@@ -7,6 +7,8 @@ import me.abdullah.core.type.GameItem;
 import me.abdullah.core.util.StringContext;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -15,10 +17,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 public class GamePlayer {
 
+    // TODO return optionals for pendingActions and pendingCallables (getPendingAction and getPendingCallable)
     private Map<String, Runnable> pendingActions;
+    private Map<String, Object> pendingCallables;
 
     private UUID uuid;
     private Player player;
@@ -28,6 +33,7 @@ public class GamePlayer {
         this.player = Bukkit.getPlayer(info.uuid);
 
         this.pendingActions = new HashMap<>();
+        this.pendingCallables = new HashMap<>();
     }
 
     public void sendMessage(String s){
@@ -46,6 +52,34 @@ public class GamePlayer {
         player.sendMessage(Core.getInstance().getLang().getPossibleString(s, context));
     }
 
+    public Location getLocation(){
+        return player.getLocation();
+    }
+
+    public double getX(){
+        return getLocation().getX();
+    }
+
+    public double getY(){
+        return getLocation().getY();
+    }
+
+    public double getZ(){
+        return getLocation().getZ();
+    }
+
+    public int getBlockX(){
+        return getLocation().getBlockX();
+    }
+
+    public int getBlockY(){
+        return getLocation().getBlockY();
+    }
+
+    public int getBlockZ(){
+        return getLocation().getBlockZ();
+    }
+
     public PlayerInventory getInventory(){
         return player.getInventory();
     }
@@ -56,6 +90,10 @@ public class GamePlayer {
 
     public ItemStack getItemInMainHand(){
         return player.getInventory().getItemInMainHand();
+    }
+
+    public void sendBlockChange(Location location, BlockData data){
+        player.sendBlockChange(location, data);
     }
 
     public boolean createAccount(){
@@ -82,15 +120,40 @@ public class GamePlayer {
         pendingActions.get(key).run();
     }
 
+    public void removePendingAction(String key){
+        pendingActions.remove(key);
+    }
+
     public void completePendingAction(String key){
         runPendingAction(key);
-        pendingActions.remove(key);
+        removePendingAction(key);
+    }
+
+    public void setPendingCallable(String key, Object callable){
+        pendingCallables.put(key, callable);
+    }
+
+    public Object getPendingCallable(String key){
+        return pendingCallables.get(key);
+    }
+
+    public boolean hasPendingCallable(String key){
+        return pendingCallables.containsKey(key);
+    }
+
+    public void removePendingCallable(String key){
+        pendingCallables.remove(key);
+    }
+
+    public void resetPendingQueues(){
+        pendingActions.clear();
+        pendingCallables.clear();
     }
 
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof GamePlayer)) return false;
-        
+
         return this.uuid.equals(((GamePlayer) obj).uuid);
     }
 

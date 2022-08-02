@@ -1,6 +1,7 @@
-package me.abdullah.core.data;
+package me.abdullah.core.data.cache;
 
 import me.abdullah.core.Core;
+import me.abdullah.core.data.GamePlayer;
 import me.abdullah.core.io.Serializables;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

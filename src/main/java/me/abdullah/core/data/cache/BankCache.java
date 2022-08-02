@@ -1,8 +1,6 @@
-package me.abdullah.core.data;
+package me.abdullah.core.data.cache;
 
 import me.abdullah.core.Core;
-import me.abdullah.core.data.cache.ICache;
-import me.abdullah.core.data.cache.SingleLoadCache;
 import me.abdullah.core.economy.BankAccount;
 import me.abdullah.core.economy.BankAccountData;
 import me.abdullah.core.io.Serializables;
@@ -15,14 +13,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.*;
 
-public class BankCache implements SingleLoadCache<UUID, BankAccount> {
+public class BankCache {
 
     private Map<UUID, BankAccount> accounts;
     public BankCache(){
         this.accounts = new HashMap<>();
     }
 
-    @Override
     public void beginScheduledCacheStoringRoutine(ScheduledExecutorService service, long delay, TimeUnit unit){
         service.schedule(() -> {
             try {
@@ -33,7 +30,6 @@ public class BankCache implements SingleLoadCache<UUID, BankAccount> {
         }, delay, unit);
     }
 
-    @Override
     public BankAccount get(UUID uuid){
         return getOrDefault(uuid, null);
     }
@@ -59,12 +55,10 @@ public class BankCache implements SingleLoadCache<UUID, BankAccount> {
         }
     }
 
-    @Override
     public BankAccount getOrDefault(UUID key, BankAccount def) {
         return accounts.getOrDefault(key, def);
     }
 
-    @Override
     public boolean containsKey(UUID key) {
         return accounts.containsKey(key);
     }
@@ -73,7 +67,6 @@ public class BankCache implements SingleLoadCache<UUID, BankAccount> {
         load(Core.getInstance().getBankFolder());
     }
 
-    @Override
     public void load(File folder){
         try{
             BankAccountData[] bank = Serializables.readBankAccountFolder(folder);

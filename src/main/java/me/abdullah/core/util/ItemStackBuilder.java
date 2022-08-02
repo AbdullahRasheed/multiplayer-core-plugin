@@ -14,8 +14,8 @@ public class ItemStackBuilder {
 
     private ItemStack itemStack;
     private ItemMeta meta;
-    public ItemStackBuilder(Material materal){
-        this.itemStack = new ItemStack(materal);
+    public ItemStackBuilder(Material material){
+        this.itemStack = new ItemStack(material);
         this.meta = itemStack.getItemMeta();
     }
 

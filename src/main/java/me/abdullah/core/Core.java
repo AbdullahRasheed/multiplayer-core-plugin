@@ -4,21 +4,25 @@ import me.abdullah.core.commands.CommandHandler;
 import me.abdullah.core.commands.accept.AcceptCommand;
 import me.abdullah.core.commands.bank.BankCommand;
 import me.abdullah.core.commands.sell.SellCommand;
+import me.abdullah.core.commands.worldvalue.WorldvalueCommand;
 import me.abdullah.core.config.CityConfig;
 import me.abdullah.core.config.Lang;
-import me.abdullah.core.data.BankCache;
-import me.abdullah.core.data.PlayerCache;
+import me.abdullah.core.data.cache.BankCache;
+import me.abdullah.core.data.cache.PlayerCache;
 import me.abdullah.core.economy.item.BankNote;
 import me.abdullah.core.item.ItemHandler;
-import org.bukkit.NamespacedKey;
+import me.abdullah.core.world.events.GriefListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.awt.geom.Area;
 import java.io.File;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Core extends JavaPlugin {
+
+    // TODO go through all classes and resolve warnings
 
     private static Core INSTANCE;
 
@@ -32,7 +36,6 @@ public class Core extends JavaPlugin {
 
     private Lang lang;
     private CityConfig cityConfig;
-
     public void onEnable(){
         INSTANCE = this;
 
@@ -48,20 +51,22 @@ public class Core extends JavaPlugin {
 
         this.playerCache = new PlayerCache();
         this.bankCache = new BankCache();
-        this.bankCache.retrieveCache();
+        this.bankCache.load();
 
         playerCache.beginScheduledGarbageCollection(Executors.newSingleThreadScheduledExecutor(), 60, TimeUnit.MINUTES);
 
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(3);
         playerCache.beginScheduledCacheStoringRoutine(executor, 15, TimeUnit.MINUTES);
         bankCache.beginScheduledCacheStoringRoutine(executor, 15, TimeUnit.MINUTES);
 
         loader.registerListener(getMainPlayerCache());
+        loader.registerListener(new GriefListener());
 
         loader.registerCommandHandler(new CommandHandler());
         loader.registerCommand(new BankCommand());
         loader.registerCommand(new SellCommand());
         loader.registerCommand(new AcceptCommand());
+        loader.registerCommand(new WorldvalueCommand());
 
         loader.registerItemHandler(new ItemHandler());
         loader.registerClickable(new BankNote());

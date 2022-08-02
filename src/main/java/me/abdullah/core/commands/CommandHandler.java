@@ -17,11 +17,13 @@ public class CommandHandler implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] args) {
+        Player player = null;
         if(commandSender instanceof Player){
-            Player player = (Player) commandSender;
-            if(commands.containsKey(command.getName())){
-                commands.get(command.getName()).runCommand(GamePlayer.get(player), args);
-            }
+            player = (Player) commandSender;
+        }
+
+        if(commands.containsKey(command.getName())){
+            commands.get(command.getName()).runCommand(GamePlayer.get(player), args);
         }
         return false;
     }

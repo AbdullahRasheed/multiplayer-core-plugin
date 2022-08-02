@@ -52,7 +52,6 @@ public class Updater {
                     in.close();
                     out.close();
 
-                    // TODO noclassdeffound issue
                     broadcastScheduleId = Bukkit.getScheduler().runTaskTimer(core, new Runnable() {
                         int counter = 0;
 

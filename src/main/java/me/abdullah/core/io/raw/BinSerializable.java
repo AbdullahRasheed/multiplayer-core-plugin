@@ -2,24 +2,23 @@ package me.abdullah.core.io.raw;
 
 import java.io.*;
 
-public class BinSerializable {
+public class BinSerializable implements Serializable {
 
-    private Serializable serializable;
-    public BinSerializable(Serializable serializable){
-        this.serializable = serializable;
-    }
+    // TODO make separate classes for java serialization and kryo serialization
 
-    public void storeTo(File file) throws IOException {
+    @Override
+    public void store(Object o, File file) throws IOException {
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-        oos.writeObject(serializable);
+        oos.writeObject(o);
 
         oos.close();
         fos.close();
     }
 
-    public static Object read(File file) throws IOException, ClassNotFoundException {
+    @Override
+    public Object read(File file) throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);
 

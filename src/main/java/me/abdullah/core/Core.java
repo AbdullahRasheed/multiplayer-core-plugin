@@ -71,6 +71,8 @@ public class Core extends JavaPlugin {
         loader.registerItemHandler(new ItemHandler());
         loader.registerClickable(new BankNote());
 
+        loader.registerGameItemRecipes();
+
         loader.beginUpdateChecker(this);
     }
 

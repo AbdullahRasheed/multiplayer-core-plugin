@@ -2,6 +2,7 @@ package me.abdullah.core;
 
 import me.abdullah.core.commands.Command;
 import me.abdullah.core.commands.CommandHandler;
+import me.abdullah.core.item.GameItemRecipe;
 import me.abdullah.core.item.ItemHandler;
 import me.abdullah.core.type.Clickable;
 import org.bukkit.Bukkit;
@@ -83,6 +84,20 @@ public class PluginLoader {
 
     public void registerClickable(Clickable clickable){
         itemHandler.registerClickable(clickable.getId(), clickable);
+    }
+
+    public void registerGameItemRecipe(GameItemRecipe recipe){
+        try {
+            Bukkit.addRecipe(recipe.getRecipe().call());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void registerGameItemRecipes(){
+        for (GameItemRecipe value : GameItemRecipe.values()) {
+            registerGameItemRecipe(value);
+        }
     }
 
     public void beginUpdateChecker(Core core){

@@ -15,7 +15,7 @@ public class GriefListener implements Listener {
             event.setCancelled(!WorldValues.CREEPER_EXPLOSIONS);
         }
 
-        if(event.getEntity().getType() == EntityType.GHAST){
+        if(event.getEntity().getType() == EntityType.FIREBALL){
             event.setCancelled(!WorldValues.GHAST_EXPLOSIONS);
         }
     }

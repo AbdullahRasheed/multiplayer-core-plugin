@@ -14,6 +14,7 @@ me\abdullah\core\type\Craftable.class
 me\abdullah\core\Core.class
 me\abdullah\core\world\WorldValues.class
 me\abdullah\core\world\events\GriefListener.class
+me\abdullah\core\item\GameItemRecipe.class
 me\abdullah\core\util\StringContext.class
 me\abdullah\core\io\raw\Serializable.class
 me\abdullah\core\Updater$1.class

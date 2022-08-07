@@ -1,2 +1,27 @@
-price-map:
-  - DIAMOND:200
+tiers:
+  1:
+    chance: 0.52
+    mobs:
+      - zombie,10
+      - skeleton,10
+      - sheep,8
+      - spider,10
+      - creeper,10
+  2:
+    chance: 0.35
+    mobs:
+      - drowned,5
+      - witch,1
+      - enderman,2
+      - ghast,3
+  3:
+    chance: 0.10
+    mobs:
+      - elder_guardian,1
+      - shulker,5
+  4:
+    chance: 0.03
+    mobs:
+      - wither,1
+      - ender_dragon,1
+      - warden,1

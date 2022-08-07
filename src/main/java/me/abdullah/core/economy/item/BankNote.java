@@ -8,6 +8,7 @@ import me.abdullah.core.type.Clickable;
 import me.abdullah.core.util.ItemStackBuilder;
 import me.abdullah.core.util.StringContext;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -47,6 +48,11 @@ public class BankNote extends Clickable {
                 || event.getAction() == Action.RIGHT_CLICK_BLOCK){
             GamePlayer player = GamePlayer.get(event.getPlayer());
             int money = ItemNBT.getValue(event.getItem(), "money", PersistentDataType.INTEGER);
+
+            if(player.getAccount() == null) {
+                // TODO error message
+                return;
+            }
 
             player.getAccount().unsafeAddMoney(money*event.getItem().getAmount());
             player.sendFormattedMessage("check_deposit", new StringContext(money));

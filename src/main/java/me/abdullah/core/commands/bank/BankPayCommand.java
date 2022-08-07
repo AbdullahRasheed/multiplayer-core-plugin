@@ -21,6 +21,11 @@ public class BankPayCommand extends Command {
             return;
         }
 
+        if(player.getAccount() == null){
+            // TODO error message
+            return;
+        }
+
         // TODO better way to gets args[0] for StringContext, maybe store the player's name in BankAccount?
         player.sendFormattedMessage("player_lookup", new StringContext(args[0]));
         BankAccount recipient = getAccount(args);

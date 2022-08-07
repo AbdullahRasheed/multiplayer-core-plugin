@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.awt.geom.Area;
 import java.io.File;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +28,8 @@ public class Core extends JavaPlugin {
     private static Core INSTANCE;
 
     private int version;
+
+    private Random random;
 
     private File playerFolder;
     private File bankFolder;
@@ -42,6 +45,8 @@ public class Core extends JavaPlugin {
         PluginLoader loader = new PluginLoader(this);
 
         this.version = loader.getVersionCode();
+
+        this.random = new Random();
 
         this.lang = new Lang(loader.loadConfig("lang.yml"));
         this.cityConfig = new CityConfig(loader.loadConfig("city.yml"));
@@ -82,6 +87,10 @@ public class Core extends JavaPlugin {
 
     public int getVersionCode(){
         return version;
+    }
+
+    public Random getRandom(){
+        return random;
     }
 
     public PlayerCache getMainPlayerCache(){

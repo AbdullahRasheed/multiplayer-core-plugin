@@ -18,6 +18,11 @@ public class BankWithdrawCommand extends Command {
             return;
         }
 
+        if(player.getAccount() == null){
+            // TODO error message
+            return;
+        }
+
         int money;
         try {
             money = getInteger(args);

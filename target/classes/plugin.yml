@@ -7,8 +7,6 @@ main: me.abdullah.core.Core
 commands:
   bank:
     description: A parent command to manage the user's bank
-  sell:
-    description: Sells items from the player's inventory
   accept:
     description: Executes the given pending action
   worldvalue:

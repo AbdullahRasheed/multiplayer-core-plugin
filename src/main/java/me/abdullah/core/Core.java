@@ -3,18 +3,17 @@ package me.abdullah.core;
 import me.abdullah.core.commands.CommandHandler;
 import me.abdullah.core.commands.accept.AcceptCommand;
 import me.abdullah.core.commands.bank.BankCommand;
-import me.abdullah.core.commands.sell.SellCommand;
 import me.abdullah.core.commands.worldvalue.WorldvalueCommand;
 import me.abdullah.core.config.CityConfig;
 import me.abdullah.core.config.Lang;
 import me.abdullah.core.data.cache.BankCache;
 import me.abdullah.core.data.cache.PlayerCache;
+import me.abdullah.core.data.cache.listeners.PlayerCacheListener;
 import me.abdullah.core.economy.item.BankNote;
 import me.abdullah.core.item.ItemHandler;
 import me.abdullah.core.world.events.GriefListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.awt.geom.Area;
 import java.io.File;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -56,20 +55,19 @@ public class Core extends JavaPlugin {
 
         this.playerCache = new PlayerCache();
         this.bankCache = new BankCache();
-        this.bankCache.load();
+        this.bankCache.deserialize(bankFolder);
 
-        playerCache.beginScheduledGarbageCollection(Executors.newSingleThreadScheduledExecutor(), 60, TimeUnit.MINUTES);
+        playerCache.beginScheduledGarbageCollection(playerFolder, Executors.newSingleThreadScheduledExecutor(), 60, TimeUnit.MINUTES);
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(3);
-        playerCache.beginScheduledCacheStoringRoutine(executor, 15, TimeUnit.MINUTES);
-        bankCache.beginScheduledCacheStoringRoutine(executor, 15, TimeUnit.MINUTES);
+        playerCache.beginScheduledCacheStoringRoutine(playerFolder, executor, 15, TimeUnit.MINUTES);
+        bankCache.beginScheduledCacheStoringRoutine(bankFolder, executor, 15, TimeUnit.MINUTES);
 
-        loader.registerListener(getMainPlayerCache());
+        loader.registerListener(new PlayerCacheListener(playerCache, playerFolder));
         loader.registerListener(new GriefListener());
 
         loader.registerCommandHandler(new CommandHandler());
         loader.registerCommand(new BankCommand());
-        loader.registerCommand(new SellCommand());
         loader.registerCommand(new AcceptCommand());
         loader.registerCommand(new WorldvalueCommand());
 

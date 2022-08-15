@@ -9,67 +9,63 @@ import me.abdullah.core.io.raw.BinSerializable;
 import org.bukkit.Bukkit;
 
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 
 public class Serializables {
 
-    public static GamePlayer.GamePlayerInfo readPlayerNullable(UUID uuid) throws IOException {
+    public static <T extends Serializable> T readFileNullable(File folder, UUID uuid, Class<T> clazz) throws IOException {
         BinSerializable serializable = new BinSerializable();
 
-        GamePlayer.GamePlayerInfo player = null;
+        T t = null;
         try {
-             player = (GamePlayer.GamePlayerInfo) serializable.read(
-                    new File(Core.getInstance().getPlayersFolder(), uuid.toString() + ".bin")
+             t = (T) serializable.read(
+                    new File(folder, uuid.toString() + ".bin")
             );
         }catch (IOException e){
             throw new IOException(e);
         }catch (ClassNotFoundException ce){
-            Bukkit.getLogger().severe("Could not read player file! " + ce.getMessage());
+            Bukkit.getLogger().severe("Could not read serializable file! " + ce.getMessage());
         }
 
-        return player;
+        return t;
     }
 
-    // TODO abstractify caches to reduce these methods into one method called by storePlayer, storePlayerCache, storeAccount, and storeBank
-    public static void storePlayer(UUID uuid, PlayerCache cache) throws IOException {
-        BinSerializable serializable = new BinSerializable();
-        serializable.store(cache.get(uuid).getAsSerializable(), new File(Core.getInstance().getPlayersFolder(), uuid.toString() + ".bin"));
-    }
-
-    public static void storePlayerCache(PlayerCache cache) throws IOException {
-        for (UUID uuid : cache.getPlayers().keySet()) {
-            storePlayer(uuid, cache);
-        }
-    }
-
-    public static BankAccountData[] readBankAccountFolder(File folder) throws IOException {
+    public static <T extends Serializable> T[] readFolder(Class<T> clazz, File folder) throws IOException {
         File[] files = folder.listFiles();
-        BankAccountData[] bank = new BankAccountData[files.length];
+        T[] cache = (T[]) Array.newInstance(clazz, files.length);
 
         BinSerializable serializable = new BinSerializable();
 
         try {
             for (int i = 0; i < files.length; i++) {
-                bank[i] = (BankAccountData) serializable.read(files[i]);
+                cache[i] = (T) serializable.read(files[i]);
             }
         }catch (IOException e){
             throw new IOException(e);
         }catch (ClassNotFoundException ce){
-            Bukkit.getLogger().severe("Could not read bank folder! " + ce.getMessage());
+            Bukkit.getLogger().severe("Could not read cache folder! " + ce.getMessage());
             return null;
         }
 
-        return bank;
+        return cache;
     }
 
-    public static void storeAccount(UUID uuid, BankCache cache) throws IOException {
+    public static <T extends Serializable> void storeFolder(Map<UUID, T> storeMap, Class<T> clazz, File folder) throws IOException {
         BinSerializable serializable = new BinSerializable();
-        serializable.store(cache.get(uuid).getAsSerializable(), new File(Core.getInstance().getBankFolder(), uuid.toString() + ".bin"));
+
+        for (UUID uuid : storeMap.keySet()){
+            serializable.store(storeMap.get(uuid), new File(folder, uuid.toString() + ".bin"));
+        }
     }
 
-    public static void storeBank(BankCache cache) throws IOException {
-        for (UUID uuid : cache.getAccounts().keySet()) {
-            storeAccount(uuid, cache);
+    public static <T, Z extends Serializable> void storeFolder(Map<UUID, T> storeMap, Class<Z> clazz, Function<T, Z> func, File folder) throws IOException {
+        BinSerializable serializable = new BinSerializable();
+
+        for (UUID uuid : storeMap.keySet()){
+            serializable.store(func.apply(storeMap.get(uuid)), new File(folder, uuid.toString() + ".bin"));
         }
     }
 }

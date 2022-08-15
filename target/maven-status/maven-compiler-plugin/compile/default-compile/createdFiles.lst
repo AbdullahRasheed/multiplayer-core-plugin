@@ -2,6 +2,7 @@ me\abdullah\core\commands\bank\BankWithdrawCommand.class
 me\abdullah\core\data\GamePlayer$GamePlayerInfo.class
 me\abdullah\core\item\ItemNBT.class
 me\abdullah\core\PluginLoader.class
+me\abdullah\core\data\cache\GameCache.class
 me\abdullah\core\type\Clickable.class
 me\abdullah\core\util\ItemStackBuilder.class
 me\abdullah\core\commands\worldvalue\WorldvalueCommand.class
@@ -12,13 +13,14 @@ me\abdullah\core\commands\CommandHandler.class
 me\abdullah\core\io\raw\BinSerializable.class
 me\abdullah\core\type\Craftable.class
 me\abdullah\core\Core.class
+me\abdullah\core\data\cache\listeners\PlayerCacheListener.class
 me\abdullah\core\world\WorldValues.class
 me\abdullah\core\world\events\GriefListener.class
 me\abdullah\core\item\GameItemRecipe.class
 me\abdullah\core\util\StringContext.class
+me\abdullah\core\economy\tasks\TaskListener.class
 me\abdullah\core\io\raw\Serializable.class
 me\abdullah\core\Updater$1.class
-me\abdullah\core\commands\sell\SellCommand.class
 me\abdullah\core\item\ItemHandler.class
 me\abdullah\core\commands\Command.class
 me\abdullah\core\data\cache\BankCache.class
@@ -35,3 +37,4 @@ me\abdullah\core\economy\item\BankNote.class
 me\abdullah\core\type\GameItem.class
 me\abdullah\core\commands\accept\AcceptCommand.class
 me\abdullah\core\config\CityConfig.class
+me\abdullah\core\economy\tasks\TaskTier.class

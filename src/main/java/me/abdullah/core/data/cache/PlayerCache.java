@@ -2,12 +2,15 @@ package me.abdullah.core.data.cache;
 
 import me.abdullah.core.Core;
 import me.abdullah.core.data.GamePlayer;
+import me.abdullah.core.economy.BankAccount;
+import me.abdullah.core.economy.BankAccountData;
 import me.abdullah.core.io.Serializables;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,63 +20,42 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerCache implements Listener {
+public class PlayerCache extends GameCache<UUID, GamePlayer> {
 
-    private Map<UUID, GamePlayer> players;
-
-    public PlayerCache(){
-        this.players = new HashMap<>();
+    @Override
+    public GamePlayer get(UUID uuid){
+        return getOrDefault(uuid, null);
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), () -> {
-            UUID uuid = event.getPlayer().getUniqueId();
+    @Override
+    public void serialize(File folder) {
+        try {
+            Serializables.storeFolder(map, GamePlayer.GamePlayerInfo.class, GamePlayer::getAsSerializable, folder);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            if(!players.containsKey(uuid)) {
-                try {
-                    GamePlayer.GamePlayerInfo player = Serializables.readPlayerNullable(uuid);
-                    if(player == null){
-                        players.put(uuid, GamePlayer.create(new GamePlayer.GamePlayerInfo(uuid)));
-                        return;
-                    }
-
-                    players.put(uuid, GamePlayer.create(player));
-                }catch(IOException e){
-                    players.put(uuid, GamePlayer.create(new GamePlayer.GamePlayerInfo(uuid)));
-                }
-
-                return;
+    @Override
+    public void deserialize(File folder) {
+        try {
+            GamePlayer.GamePlayerInfo[] players = Serializables.readFolder(GamePlayer.GamePlayerInfo.class, folder);
+            for (GamePlayer.GamePlayerInfo data : players) {
+                map.put(data.uuid, GamePlayer.create(data));
             }
-
-            players.get(uuid).setOnline();
-        });
+        }catch (IOException e){
+            Bukkit.getLogger().severe("Could not continue retrieving the bank cache: " + e.getMessage());
+            return;
+        }
     }
 
-    public void beginScheduledGarbageCollection(ScheduledExecutorService executor, long delay, TimeUnit unit){
+    @Override
+    public void beginScheduledGarbageCollection(File folder, ScheduledExecutorService executor, long delay, TimeUnit unit){
         executor.schedule(() -> {
-            Iterator<Map.Entry<UUID, GamePlayer>> iter = players.entrySet().iterator();
+            Iterator<Map.Entry<UUID, GamePlayer>> iter = map.entrySet().iterator();
             while(iter.hasNext()){
                 if(!iter.next().getValue().isOnline()) iter.remove();
             }
         }, delay, unit);
-    }
-
-    public void beginScheduledCacheStoringRoutine(ScheduledExecutorService service, long delay, TimeUnit unit){
-        service.schedule(() -> {
-            try {
-                Serializables.storePlayerCache(this);
-            } catch (IOException e) {
-                Bukkit.getLogger().severe("Could not store the player cache! " + e.getMessage());
-            }
-        }, delay, unit);
-    }
-
-    public GamePlayer get(UUID uuid){
-        return players.getOrDefault(uuid, null);
-    }
-
-    public Map<UUID, GamePlayer> getPlayers(){
-        return players;
     }
 }
